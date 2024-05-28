@@ -12,7 +12,7 @@ const montserrat = Montserrat({
     variable: '--font-montserrat',
 })
 
-const baseUrl = 'https://fortbux-fe.vercel.app/' || (process.env.VERCEL_URL as string) || 'https://fortbux.com'
+const baseUrl = 'https://olfu.vercel.app/'
 
 export const viewport: Viewport = {
     themeColor: '#424792',
@@ -35,17 +35,17 @@ export const metadata: Metadata = {
     ],
     appleWebApp: {
         capable: true,
-        title: 'Fortbux',
+        title: 'OLFU Student',
         statusBarStyle: 'black-translucent',
     },
     authors: {
         url: baseUrl,
-        name: 'Fortbux',
+        name: 'OLFU Student',
     },
     twitter: {
         card: 'summary_large_image',
-        site: '@Fortbux',
-        creator: '@Fortbux',
+        site: '@OLFU Student',
+        creator: '@OLFU Student',
         images: baseUrl + '/banner-01.png',
     },
     openGraph: {
