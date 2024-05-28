@@ -9,7 +9,9 @@ export async function middleware(req: NextRequest, event: NextFetchEvent) {
     if (
         req.nextUrl.pathname.startsWith('/_next') ||
         req.nextUrl.pathname.startsWith('/assets') ||
-        req.nextUrl.pathname.startsWith('/api')
+        req.nextUrl.pathname.startsWith('/api') || 
+        req.nextUrl.pathname.endsWith('.ico') ||
+        req.nextUrl.pathname.endsWith('.png')
     )
         return NextResponse.next()
 
