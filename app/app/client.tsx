@@ -15,18 +15,20 @@ import Image from 'next/image'
 import { PostItem } from './post-item'
 import { HomeProvider, useHome } from 'lib/contexts'
 import { CommentType, PostType, ReactionType } from 'lib/types'
+import { EditIcon } from '@chakra-ui/icons'
+import NextLink from 'next/link'
 
 export const links = [
-    { icon: FaHouseUser, name: 'Profile', href: '/profile' },
-    { icon: AiOutlineSchedule, name: 'Schedule', href: '/schedule' },
-    { icon: GiWhiteBook, name: 'Subjects', href: '/subjects' },
-    { icon: MdEditNote, name: 'Registration', href: '/registration' },
-    { icon: GiAbacus, name: 'Grades', href: '/grades' },
-    { icon: FaCalendarAlt, name: 'Calendar', href: '/calendar', disabled: true },
-    { icon: MdAccountBalance, name: 'Account', href: '/account', disabled: true },
-    { icon: MdForum, name: 'Forum', href: '/forum', disabled: true },
-    { icon: GoReport, name: 'Report', href: '/report', disabled: true },
-    { icon: CiSettings, name: 'Settings', href: '/settings', disabled: true },
+    { icon: FaHouseUser, name: 'Profile', href: '/app/profile' },
+    { icon: AiOutlineSchedule, name: 'Schedule', href: '/app/schedule' },
+    { icon: GiWhiteBook, name: 'Subjects', href: '/app/subjects' },
+    { icon: MdEditNote, name: 'Registration', href: '/app/registration' },
+    { icon: GiAbacus, name: 'Grades', href: '/app/grades' },
+    { icon: FaCalendarAlt, name: 'Calendar', href: '/app/calendar', disabled: true },
+    { icon: MdAccountBalance, name: 'Account', href: '/app/account', disabled: true },
+    { icon: MdForum, name: 'Forum', href: '/app/forum', disabled: true },
+    { icon: GoReport, name: 'Report', href: '/app/report', disabled: true },
+    { icon: CiSettings, name: 'Settings', href: '/app/settings', disabled: true },
 ]
 
 const colors = ['green', 'teal', 'blue', 'cyan', 'purple', 'pink', 'red', 'orange', 'yellow', 'black']
@@ -42,7 +44,10 @@ export function AppClient() {
         <Flex as='article' className='app' w='full' gap='2rem'>
             <Box flex={1}>
                 <Announcements />
-                <Heading my='1rem'>Posts</Heading>
+                <Heading as={Flex} justify='space-between' display={{ base: 'flex', lg: 'none' }} my='1rem' w='full'>
+                    Posts
+                    <IconButton as={NextLink} href='/app/post/create' aria-label='Create post' icon={<EditIcon />} fontSize='1rem' colorScheme='green'/>
+                </Heading>
                 <Box
                     mb='1rem'
                     style={{

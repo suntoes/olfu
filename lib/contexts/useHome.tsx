@@ -6,11 +6,12 @@ import {
     HomeContextType,
     HomeContextValue,
     HomeProviderProps,
+    PostType,
     UserContextType,
     UserContextValue,
     UserProviderProps,
 } from 'lib/types'
-import { authedAPI } from 'lib/utils'
+import { addUTCOffset, authedAPI } from 'lib/utils'
 import { useUser } from '.'
 
 const HomeContext = createContext<HomeContextType>(null)
@@ -23,19 +24,79 @@ export const useHome = () => {
 
 export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) => {
     const [reactions, setReactions] = useState(valueProp?.reactions || [])
-    const [comments, setComments] = useState(valueProp?.comments || [])
-    const [posts, setPosts] = useState(valueProp?.posts || [])
+    const [initialComments, setComments] = useState(valueProp?.comments || [])
+    const [initialPosts, setPosts] = useState(valueProp?.posts || [])
     const { user } = useUser()
     const id = useId()
 
-    const commentsRef = useRef<CommentType[]>(comments)
+    const comments: CommentType[] = useMemo(() => initialComments
+        .map((item) => ({...item, timestamp: addUTCOffset(item.timestamp).toString()}))
+        .sort((a, b) => (new Date(b.timestamp)).getTime() - (new Date(a.timestamp)).getTime())
+    , [initialComments])
+
+    const posts: PostType[] = useMemo(() => initialPosts
+        .map((item) => ({...item, timestamp: addUTCOffset(item.timestamp).toString()}))
+        .sort((a, b) => (new Date(b.timestamp)).getTime() - (new Date(a.timestamp)).getTime())
+    , [initialPosts])
+
+    const commentsRef = useRef<CommentType[]>(initialComments)
+    const postsRef = useRef<PostType[]>(initialPosts)
+    
+    const handlePost: HomeContextValue['handlePost'] = useCallback(
+        async (postid, title, content) => {
+            if(!postid && title && content) {
+                const tmpId = new Date().getTime().toString()        
+                const res = await authedAPI('/post', 'POST', JSON.stringify({ title, content }))
+                if (res?.error) {
+
+                } else {
+                    const newPosts = [
+                        res,
+                        ...initialPosts,
+                    ]
+                    postsRef.current = newPosts
+                    setPosts(newPosts)
+                    return res
+                }
+            } else if (postid && title && content) {
+                const targetPost = {...postsRef.current.find((item) => item.postid === postid), title, content} as PostType
+                const oldPosts = [...postsRef.current]
+                const newPosts = [targetPost, ...postsRef.current.filter((item) => item.postid !== postid)]
+                postsRef.current = newPosts
+                setPosts(newPosts)
+
+                const res = await authedAPI('/post', 'PATCH', JSON.stringify({ postid, title, content }))
+                if (res?.error) {
+                    postsRef.current = oldPosts
+                    setPosts(oldPosts)
+                } else {
+
+                }
+            } else if (postid &&!title && !content) {
+                const targetPost = postsRef.current.find((item) => item.postid === postid) as PostType
+                const oldPosts = [...postsRef.current]
+                const newPosts = postsRef.current.filter((item) => item.postid !== postid)
+                postsRef.current = newPosts
+                setPosts(newPosts)
+
+                const res = await authedAPI('/post', 'DELETE', JSON.stringify({ postid }))
+                if (res?.error) {
+                    postsRef.current = oldPosts
+                    setPosts(oldPosts)
+                } else {
+
+                }
+            }
+        },
+        [initialPosts, user]
+    )
 
     const handleComment: HomeContextValue['handleComment'] = useCallback(
         async (postid, commentcontent, commentid) => {
             if (commentcontent) {
                 const tmpId = new Date().getTime().toString()
                 const newComments = [
-                    ...comments,
+                    ...initialComments,
                     { commentid: tmpId, postid, username: user?.username || '', commentcontent, timestamp: '' },
                 ]
                 commentsRef.current = newComments
@@ -76,7 +137,7 @@ export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) 
                 }
             }
         },
-        [comments],
+        [user, initialComments],
     )
 
     const handleReact: HomeContextValue['handleReact'] = useCallback(
@@ -143,6 +204,7 @@ export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) 
         setComments,
         handleComment,
         handleReact,
+        handlePost
     }
 
     return <HomeContext.Provider value={value}>{children}</HomeContext.Provider>

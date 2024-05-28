@@ -27,15 +27,14 @@ export const Loading = ({ className, ...props }: LoadingProps): JSX.Element => {
                     height='100vh'
                     width='100vw'
                     zIndex={999}
-                    gap='3rem'
                     left={0}
                     top={0}
                 >
-                    <Image alt='' src='/assets/logo-white.png' w='full' maxW='15rem' />
-                    <Box background='green.700' className='loading__progress'>
+                    <Image alt='' src='/assets/logo-white.png' w='full' maxW='10rem' />
+                    <Box background='green.700' className='loading__progress' mt='1.5rem'>
                         <div className='loading__progress__fill' />
                     </Box>
-                    <Box color='white' className='loading__text'>
+                    <Box color='white' className='loading__text' mt='1rem'>
                         Connecting
                         <div className='loading__text__dot--00'></div>
                         <div className='loading__text__dot--01'></div>

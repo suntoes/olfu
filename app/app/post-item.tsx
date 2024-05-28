@@ -102,7 +102,7 @@ export const PostItem = ({ post }: { post: PostType }) => {
             <Text p='1rem' bg='gray.50' my='1rem'>
                 <b>{new Date(post.timestamp).toLocaleDateString()}</b>
                 <br></br>
-                {post.content.slice(0, 200)}
+                {post.content.slice(0, 200).replace(/<\/?[^>]+(>|$)/g, "")}
             </Text>
             <Flex gap='0.5rem' align='center'>
                 <IconButton aria-label='' icon={<FaUser />} borderRadius='100%' />

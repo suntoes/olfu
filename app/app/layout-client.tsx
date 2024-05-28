@@ -31,7 +31,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin, FaTiktok } from 'react-icons/fa'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { EditIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { useCallback, useRef } from 'react'
 import { useCookies } from 'react-cookie'
 import { getGreeting, logout } from 'lib/utils'
@@ -43,6 +43,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { PostItem } from './post-item'
 import { revalidatePath } from 'next/cache'
+import { IoMdExit } from "react-icons/io";
+import { links } from './client'
 
 export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
     const { isOpen: isLogoutOpen, onOpen: onLogoutOpen, onClose: onLogoutClose } = useDisclosure()
@@ -79,8 +81,21 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <Input placeholder='Type here...' />
+                        <Flex direction='column'>
+                            {links.map((item, i) =>
+                                <Link key={i} fontSize='1.25rem' px='0.5rem' py='0.75rem' as={NextLink} display='flex' alignItems='center' gap='0.5rem' href={item.disabled ? '' : item.href} opacity={item.disabled ? 0.4 : 1}>
+                                    <item.icon />
+                                    {item.name}
+                                </Link>
+                            )}
+                        </Flex>
                     </DrawerBody>
+                    <DrawerFooter>
+                        <Button onClick={onLogoutOpen} fontSize='1.25rem' display='flex' gap='0.25rem' alignItems='center'>
+                            <IoMdExit />
+                            Logout
+                        </Button>
+                    </DrawerFooter>
                 </DrawerContent>
             </Drawer>
 
@@ -143,7 +158,7 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                             icon={<FaUser />}
                         />
                         <MenuList>
-                            <MenuItem>Profile</MenuItem>
+                            <MenuItem><Link as={NextLink} href='/app/profile'>Profile</Link></MenuItem>
                             <MenuItem onClick={onLogoutOpen}>Logout</MenuItem>
                         </MenuList>
                     </Menu>
@@ -158,7 +173,10 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                     {children}
                     {(pathname.startsWith('/app/post') || pathname === '/app') && (
                         <Box display={{ base: 'none', lg: 'block' }} w='30%' maxW='30rem' zIndex={1}>
-                            <Heading mb='1rem'>Posts</Heading>
+                            <Heading as={Flex} justify='space-between' mb='1rem'>
+                                Posts
+                                <IconButton as={NextLink} href='/app/post/create' aria-label='Create post' icon={<EditIcon />} fontSize='1rem' colorScheme='green'/>
+                            </Heading>
                             <Box h='50vh' maxH='70vh' overflow='auto'>
                                 <Flex direction='column' gap='0.75rem'>
                                     {posts.map((item, i) => (

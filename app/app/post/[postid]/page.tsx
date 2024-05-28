@@ -6,7 +6,7 @@ export async function generateMetadata({ params }: { params: { postid: string } 
 
     return {
         title: `${postQuery.rows[0].title} - OLFU Student`,
-        description: postQuery.rows[0].content.slice(0, 50) + (postQuery.rows[0].content.length > 50 ? '...' : ''),
+        description: postQuery.rows[0].content.slice(0, 80).replace(/<\/?[^>]+(>|$)/g, "") + (postQuery.rows[0].content.length > 50 ? '...' : ''),
     }
 }
 

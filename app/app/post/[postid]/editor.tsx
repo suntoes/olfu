@@ -1,66 +1,39 @@
-'use client'
-
-import {
-    Box,
-    Button,
-    Divider,
-    Flex,
-    Heading,
-    IconButton,
-    Drawer,
-    DrawerBody,
-    DrawerCloseButton,
-    DrawerContent,
-    DrawerHeader,
-    DrawerOverlay,
-    Text,
-    Tooltip,
-    useDisclosure,
-    Input,
-} from '@chakra-ui/react'
+import { Color } from '@tiptap/extension-color'
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import { EditorProvider, useCurrentEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { PostType } from 'lib/types'
+import React, { useCallback, useRef, useState } from 'react'
+import { Box, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, IconButton, Input, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { FaTrash, FaUser } from 'react-icons/fa'
+import { GrChat, GrDislike, GrLike } from 'react-icons/gr'
+import { EditIcon } from '@chakra-ui/icons'
+import { Tiptap } from './tiptap'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useHome, useUser } from 'lib/contexts'
-import { PostType } from 'lib/types'
-import { FaUser, FaTrash } from 'react-icons/fa'
-import { EditIcon } from '@chakra-ui/icons'
-import { GrChat, GrDislike, GrLike } from 'react-icons/gr'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { addUTCOffset, timeAgo } from 'lib/utils'
-import { PostItem } from 'app/app/post-item'
-import { Editor } from './editor'
-import './content.scss'
+import { timeAgo } from 'lib/utils'
 
-export const Post = ({ postid }: { postid: string }) => {
+export const Editor = ({ post, onCancel }: { post: PostType; onCancel: () => void }) => {
+
     const { isOpen: isCommentOpen, onOpen: onCommentOpen, onClose: onCommentClose } = useDisclosure()
-    const { posts, reactions, comments, handleReact, handleComment } = useHome()
+    const { posts, reactions, comments, handlePost, handleReact, handleComment } = useHome()
+    const [content, setContent] = useState(post.content)
+    const [title, setTitle] = useState(post.title)
     const searchParams = useSearchParams()
-    const [edit, setEdit] = useState(false)
     const { user } = useUser()
     const router = useRouter()
 
     const commentBtnRef = useRef<HTMLButtonElement | null>(null)
 
-    useEffect(() => {
-        if (searchParams.get('comment') === '1') {
-            router.replace('/app/post/' + postid, { scroll: false })
-            onCommentOpen()
-        }
-    }, [searchParams])
-
     const handleCommentSubmit = useCallback(
         (e: any & React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
-            handleComment(postid, (e.target as any)?.comment.value)
+            handleComment(post.postid, (e.target as any)?.comment.value)
             e.target.reset()
         },
         [handleComment],
     )
-
-    const post: PostType | undefined = posts.find((item) => item.postid.toString() === postid)
-    if (!post) {
-        router.replace('/app')
-        return <></>
-    }
 
     const postCommentReactions = reactions.filter((item) => item.postid === post?.postid && !!item.commentid)
     const postReactions = reactions.filter((item) => item.postid === post?.postid && !item.commentid)
@@ -77,7 +50,7 @@ export const Post = ({ postid }: { postid: string }) => {
     })()
 
     return (
-        <>
+        <Box className='editor'>
             <Drawer isOpen={isCommentOpen} placement='right' onClose={onCommentClose} finalFocusRef={commentBtnRef}>
                 <DrawerOverlay />
                 <DrawerContent>
@@ -207,146 +180,120 @@ export const Post = ({ postid }: { postid: string }) => {
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
-            <Box w='full'>
-                {edit ? (
-                    <Editor post={post} onCancel={() => setEdit(false)} />   
-                ) : <>
-                        <Heading fontSize='3.5rem' maxW='80%'>
-                            {post.title}
-                        </Heading>
-                        <Flex gap='0.5rem' align='center' my='2rem'>
-                            <IconButton
-                                aria-label=''
-                                icon={<FaUser fontSize='1.25rem' />}
-                                borderRadius='100%'
-                                w='3rem'
-                                h='3rem'
-                                bg='gray.300'
-                            />
-                            <Flex direction='column' justify='end'>
-                                <Text color='black'>{post.username}</Text>
-                                <Text display='flex' alignItems='center' gap='0 0.75rem' flexWrap='wrap'>
-                                    Published in OLFU<span>·</span>
-                                    {postMinuteRead < 1 ? `< 1` : Math.floor(postMinuteRead)} min read<span>·</span>
-                                    {new Date(post.timestamp).toLocaleDateString()}
-                                </Text>
-                            </Flex>
-                        </Flex>
-                        <Divider borderColor='gray.300' />
-                        <Flex gap='0.75rem' align='center' my='0.5rem'>
-                            <Tooltip
-                                hasArrow
-                                label={
-                                    postLikes
-                                        .slice(0, 3)
-                                        .map((item) => item.username)
-                                        .join(', ') + (postLikes.length > 3 ? '...' : '')
-                                }
-                            >
-                                <Button
-                                    onClick={() =>
-                                        handleReact(
-                                            post.postid,
-                                            null,
-                                            postLikes.some((item) => item.username === user?.username) ? undefined : 'like',
-                                        )
-                                    }
-                                    variant='ghost'
-                                    display='flex'
-                                    alignItems='center'
-                                    gap='0.25rem'
-                                    textColor={
-                                        postLikes.some((item) => item.username === user?.username) ? 'green' : 'gray.900'
-                                    }
-                                >
-                                    <GrLike />
-                                    {postLikes.length}
-                                </Button>
-                            </Tooltip>
-                            <Tooltip
-                                hasArrow
-                                label={
-                                    postDislikes
-                                        .slice(0, 3)
-                                        .map((item) => item.username)
-                                        .join(', ') + (postLikes.length > 3 ? '...' : '')
-                                }
-                            >
-                                <Button
-                                    onClick={() =>
-                                        handleReact(
-                                            post.postid,
-                                            null,
-                                            postDislikes.some((item) => item.username === user?.username)
-                                                ? undefined
-                                                : 'dislike',
-                                        )
-                                    }
-                                    variant='ghost'
-                                    display='flex'
-                                    alignItems='center'
-                                    gap='0.25rem'
-                                    textColor={
-                                        postDislikes.some((item) => item.username === user?.username) ? 'red' : 'gray.900'
-                                    }
-                                >
-                                    <GrDislike />
-                                    {postDislikes.length}
-                                </Button>
-                            </Tooltip>
-                            <Tooltip
-                                hasArrow
-                                label={
-                                    Array.from(new Set(postComments.map((item) => item.username)))
-                                        .slice(0, 3)
-                                        .join(', ') +
-                                    (Array.from(new Set(postComments.map((item) => item.username))).length > 3 ? '...' : '')
-                                }
-                            >
-                                <Button
-                                    onClick={onCommentOpen}
-                                    variant='ghost'
-                                    display='flex'
-                                    alignItems='center'
-                                    gap='0.25rem'
-                                >
-                                    <GrChat />
-                                    {postComments.length}
-                                </Button>
-                            </Tooltip>
-                            {post.username === user?.username && (
-                                <Button onClick={() => setEdit(true)} colorScheme='yellow'>
-                                    <EditIcon mr='0.5rem' /> Edit
-                                </Button>
-                            )}
-                        </Flex>
-                        <Divider borderColor='gray.300' />
-                        <Box my='2.5rem' className='content' dangerouslySetInnerHTML={{ __html: post.content }} />
-                </>}
-                <Divider mb='2rem' borderColor='gray.300' />
-                <Heading display={{ base: 'block', lg: 'none' }} mb='1rem'>
-                    More Posts
-                </Heading>
-                <Box
-                    style={{
-                        maskImage:
-                            'linear-gradient(0deg, transparent, black 2rem, black calc(100% - 2rem), transparent)',
-                    }}
+            <Heading as={Input} value={title} onChange={(e: any) => setTitle(e.target.value)} m='0rem' p='0rem' h='3.5rem' fontSize='3.5rem' maxW='80%' />
+            <Flex gap='0.5rem' align='center' my='2rem'>
+                <IconButton
+                    aria-label=''
+                    icon={<FaUser fontSize='1.25rem' />}
+                    borderRadius='100%'
+                    w='3rem'
+                    h='3rem'
+                    bg='gray.300'
+                />
+                <Flex direction='column' justify='end'>
+                    <Text color='black'>{post.username}</Text>
+                    <Text display='flex' alignItems='center' gap='0 0.75rem' flexWrap='wrap'>
+                        Published in OLFU<span>·</span>
+                        {postMinuteRead < 1 ? `< 1` : Math.floor(postMinuteRead)} min read<span>·</span>
+                        {new Date(post.timestamp).toLocaleDateString()}
+                    </Text>
+                </Flex>
+            </Flex>
+            <Divider borderColor='gray.300' />
+            <Flex gap='0.75rem' align='center' my='0.5rem'>
+                <Tooltip
+                    hasArrow
+                    label={
+                        postLikes
+                            .slice(0, 3)
+                            .map((item) => item.username)
+                            .join(', ') + (postLikes.length > 3 ? '...' : '')
+                    }
                 >
-                    <Flex
-                        display={{ base: 'flex', lg: 'none' }}
-                        direction='column'
-                        aspectRatio={{ base: 3 / 4, sm: 4 / 3, md: 16 / 9 }}
-                        overflow='auto'
-                        gap='0.75rem'
-                        py='1.5rem'
+                    <Button
+                        onClick={() =>
+                            handleReact(
+                                post.postid,
+                                null,
+                                postLikes.some((item) => item.username === user?.username) ? undefined : 'like',
+                            )
+                        }
+                        variant='ghost'
+                        display='flex'
+                        alignItems='center'
+                        gap='0.25rem'
+                        textColor={
+                            postLikes.some((item) => item.username === user?.username) ? 'green' : 'gray.900'
+                        }
                     >
-                        {posts.map((item, i) => (
-                            <PostItem key={i} post={item} />
-                        ))}
-                    </Flex>
-                </Box>
-            </Box>
-        </>
+                        <GrLike />
+                        {postLikes.length}
+                    </Button>
+                </Tooltip>
+                <Tooltip
+                    hasArrow
+                    label={
+                        postDislikes
+                            .slice(0, 3)
+                            .map((item) => item.username)
+                            .join(', ') + (postLikes.length > 3 ? '...' : '')
+                    }
+                >
+                    <Button
+                        onClick={() =>
+                            handleReact(
+                                post.postid,
+                                null,
+                                postDislikes.some((item) => item.username === user?.username)
+                                    ? undefined
+                                    : 'dislike',
+                            )
+                        }
+                        variant='ghost'
+                        display='flex'
+                        alignItems='center'
+                        gap='0.25rem'
+                        textColor={
+                            postDislikes.some((item) => item.username === user?.username) ? 'red' : 'gray.900'
+                        }
+                    >
+                        <GrDislike />
+                        {postDislikes.length}
+                    </Button>
+                </Tooltip>
+                <Tooltip
+                    hasArrow
+                    label={
+                        Array.from(new Set(postComments.map((item) => item.username)))
+                            .slice(0, 3)
+                            .join(', ') +
+                        (Array.from(new Set(postComments.map((item) => item.username))).length > 3 ? '...' : '')
+                    }
+                >
+                    <Button
+                        onClick={onCommentOpen}
+                        variant='ghost'
+                        display='flex'
+                        alignItems='center'
+                        gap='0.25rem'
+                    >
+                        <GrChat />
+                        {postComments.length}
+                    </Button>
+                </Tooltip>
+                <Button onClick={onCancel} colorScheme='gray' bg='gray.300'>
+                    Cancel
+                </Button>
+                <Button onClick={() => { handlePost(post.postid, title, content); onCancel()}}  colorScheme='green'>
+                    Save
+                </Button>
+                <Button onClick={() => handlePost(post.postid, null, null)} colorScheme='red' ml='auto'>
+                    Delete
+                </Button>
+            </Flex>
+            <Divider borderColor='gray.300' mb='2.5rem'/>
+            <Tiptap content={content} onChange={(val) => setContent(val)} />
+            <Box pt='2rem'/>
+        </Box>
     )
 }
