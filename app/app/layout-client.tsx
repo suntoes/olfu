@@ -166,12 +166,14 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
             </Center>
             <Container w='full' maxW='90rem' p='2rem' m='auto'>
                 <Flex
-                    direction={pathname.startsWith('/app/post') || pathname === '/app' ? 'row' : 'column'}
+                    // direction={pathname.startsWith('/app/post') || pathname === '/app' ? 'row' : 'column'}
+                    direction='row'
                     w='full'
                     gap='2rem'
                 >
                     {children}
-                    {(pathname.startsWith('/app/post') || pathname === '/app') && (
+                    {/* {(pathname.startsWith('/app/post') || pathname === '/app') && ( */}
+                    {true && (
                         <Box display={{ base: 'none', lg: 'block' }} w='30%' maxW='30rem' zIndex={1}>
                             <Heading as={Flex} justify='space-between' mb='1rem'>
                                 Posts

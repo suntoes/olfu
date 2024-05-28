@@ -72,7 +72,7 @@ export function AppClient() {
                     {links.map((item, i) => (
                         <Button
                             key={i}
-                            as={Link}
+                            as={NextLink}
                             bg='white'
                             display='flex'
                             shadow='sm'
