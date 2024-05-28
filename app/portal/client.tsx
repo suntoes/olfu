@@ -46,15 +46,14 @@ export default function PortalClient() {
     }, [cookies])
 
     return (
-        <Center h='full' p='2.5rem'>
+        <Center h='full' p={{ base: '1rem', md: '2.5rem' }}>
             <Container
                 pos='relative'
-                minH='50rem'
+                minH={{ base: '48rem', md: '50rem'}}
                 w='full'
                 maxW='69rem'
                 bg='white'
-                rounded='5rem'
-                p='2.5rem'
+                rounded={{ base: '1rem', md: '5rem'}}
                 overflow='hidden'
                 shadow='xl'
             >
@@ -64,11 +63,11 @@ export default function PortalClient() {
                     bgGradient='linear(-45deg, gray.50, gray.200)'
                     pos='absolute'
                     overflow='hidden'
-                    rounded='5rem'
+                    rounded={{ base: '1rem', md: '5rem'}}
                     zIndex={1}
                     w='full'
                     maxW={verticalAnim ? '100%' : '50%'}
-                    p='2.5rem'
+                    p={{ base: '1rem', md: '2.5rem' }}
                     animate={
                         verticalAnim
                             ? { top: onOtherSide ? 'calc(100% - 10rem)' : '0%', left: 0 }
@@ -93,8 +92,8 @@ export default function PortalClient() {
                                 w='full'
                                 maxW={verticalAnim ? '7rem' : '15rem'}
                             />
-                            <Center gap={verticalAnim ? '0rem' : '1.5rem'} flexDir='column'>
-                                <Heading color='green.600'>{getGreeting()}!</Heading>
+                            <Center gap={verticalAnim ? '0rem' : '1.5rem'} flexDir='column' textAlign='center'>
+                                <Heading size={{ base: 'lg', md: 'xl' }} color='green.600'>{getGreeting()}!</Heading>
                                 <Link
                                     as='button'
                                     onClick={() => handleSwitch(portal === 'login' ? 'join' : 'login')}
@@ -129,7 +128,7 @@ export default function PortalClient() {
                     h={verticalAnim ? 'calc(100% - 10rem)' : 'full'}
                     w='full'
                     maxW={verticalAnim ? '100%' : '50%'}
-                    p='2.5rem'
+                    p={{ base: '1rem', md: '2.5rem' }}
                     animate={
                         verticalAnim
                             ? { top: onOtherSide ? '0rem' : '10rem', left: 0 }
