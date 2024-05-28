@@ -309,7 +309,7 @@ export const Post = ({ postid }: { postid: string }) => {
                             {postComments.length}
                         </Button>
                     </Tooltip>
-                    {post.username === user.username && (
+                    {post.username === user?.username && (
                         <Button colorScheme='yellow'>
                             <EditIcon mr='0.5rem' /> Edit
                         </Button>

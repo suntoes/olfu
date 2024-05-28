@@ -114,7 +114,7 @@ export const PostItem = ({ post }: { post: PostType }) => {
                     href={'/app/post/' + post.postid}
                     ml='auto'
                     isDisabled={pathname.endsWith('post/' + post.postid)}
-                    colorScheme={post.username === user.username ? 'green' : 'gray'}
+                    colorScheme={post.username === user?.username ? 'green' : 'gray'}
                 >
                     View
                 </Button>

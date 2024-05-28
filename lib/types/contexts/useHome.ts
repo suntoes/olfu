@@ -28,7 +28,7 @@ export interface HomeContextValue {
     setReactions: React.Dispatch<React.SetStateAction<HomeContextValue['reactions']>>
     comments: CommentType[]
     setComments: React.Dispatch<React.SetStateAction<HomeContextValue['comments']>>
-    handleComment: (postid: string, commentcontent: string | null, commentid: string | null) => void
+    handleComment: (postid: string, commentcontent: string | null, commentid?: string | null) => void
     handleReact: (postid: string, commentid: string | null, reactiontype?: 'like' | 'dislike') => void
 }
 
