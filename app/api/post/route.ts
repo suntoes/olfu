@@ -3,11 +3,10 @@ import { headers } from 'next/headers'
 import { postgres } from 'app/db'
 
 export async function POST(req: Request) {
+    const jwt = headers().get('authorization')
     try {
         const { title, content } = await req.json()
-        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [
-            headers().get('authorization'),
-        ])
+        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [jwt])
         const studentProfileQuery = await postgres.query(
             `SELECT * FROM student_profiles WHERE student_id = $1 LIMIT 1;`,
             [jwtQuery.rows[0].student_id],
@@ -23,11 +22,10 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+    const jwt = headers().get('authorization')
     try {
         const { postid, title, content } = await req.json()
-        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [
-            headers().get('authorization'),
-        ])
+        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [jwt])
         const studentProfileQuery = await postgres.query(
             `SELECT * FROM student_profiles WHERE student_id = $1 LIMIT 1;`,
             [jwtQuery.rows[0].student_id],
@@ -43,11 +41,10 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+    const jwt = headers().get('authorization')
     try {
         const { postid } = await req.json()
-        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [
-            headers().get('authorization'),
-        ])
+        const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [jwt])
         const studentProfileQuery = await postgres.query(
             `SELECT * FROM student_profiles WHERE student_id = $1 LIMIT 1;`,
             [jwtQuery.rows[0].student_id],
