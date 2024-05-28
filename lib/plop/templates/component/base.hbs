@@ -1,0 +1,16 @@
+'use client';
+
+import { {{ pascalCase name }}Props } from 'lib/types';
+import './{{pascalCase name}}Styles.scss';
+
+export const {{ pascalCase name }} = ({
+  children,
+  className,
+  ...props
+}: {{ pascalCase name }}Props ): JSX.Element => {
+  return (
+    <{{htmlTag}} {...props} className={['{{ kebabCase name }}', className].join(' ')}>
+      {children}
+    </{{htmlTag}}>
+  );
+};

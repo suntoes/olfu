@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Report Form</title>
+    </head>
+    <body>
+        <h2>Report Form</h2>
+        <form action="submit_report.php" method="post">
+            <label for="name">Name (Optional):</label>
+            <input type="text" id="name" name="name" /><br /><br />
+
+            <label for="email">Email (Optional):</label>
+            <input type="email" id="email" name="email" /><br /><br />
+
+            <label for="type">Type of Report:</label>
+            <select id="type" name="type">
+                <option value="Technical Issue">Technical Issue</option>
+                <option value="Misconduct or Behavior">Misconduct or Behavior</option>
+                <option value="Safety Concern">Safety Concern</option>
+                <option value="Academic Integrity Violation">Academic Integrity Violation</option>
+                <option value="General Feedback">General Feedback</option></select
+            ><br /><br />
+
+            <label for="description">Description:</label><br />
+            <textarea id="description" name="description" rows="4" cols="50"></textarea><br /><br />
+
+            <input type="submit" value="Submit Report" />
+        </form>
+    </body>
+</html>

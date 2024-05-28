@@ -1,0 +1,236 @@
+/* Variables */
+
+$screen-xxs: 384px;
+$screen-xs: 512px;
+$screen-sm: 640px;
+$screen-md: 768px;
+$screen-lg: 1024px;
+$screen-xl: 1280px;
+$screen-xxl: 1536px;
+
+$violet-1000: #13153b;
+$violet-950: #191a44;
+$violet-900: #16183f;
+$violet-800: #1a1c43;
+$violet-775: #1d1e4f;
+$violet-750: #1b1c4c;
+$violet-725: #1d1f53;
+$violet-700: #282c63;
+$violet-600: #24255e;
+$violet-550: #23245b;
+$violet-500: #212456;
+$violet-490: #24266a;
+$violet-481: #303279;
+$violet-475: #2e307a;
+$violet-461: #2d3076;
+$violet-450: #343779;
+$violet-431: #383a80;
+$violet-425: #393c7e;
+$violet-400: #424792;
+$violet-350: #5a5caa;
+$violet-300: #7b7ecb;
+$violet-200: #a2a4d6;
+
+$indigo-900: #23245e;
+$indigo-850: #181b4b;
+$indigo-800: #252662;
+$indigo-750: #23245e;
+$indigo-700: #20225e;
+$indigo-650: #222564;
+$indigo-625: #252075;
+$indigo-600: #313386;
+$indigo-500: #2f3386;
+$indigo-450: #3a3c9d;
+$indigo-400: #3538a2;
+$indigo-100: #696bac;
+
+$purple-1000: #1d1c47;
+$purple-900: #1e1e4f;
+$purple-800: #27135c;
+$purple-750: #26156a;
+$purple-725: #2c3066;
+$purple-700: #2c187b;
+$purple-650: #332373;
+$purple-625: #442a88;
+$purple-600: #4a158b;
+$purple-500: #5130a4;
+$purple-400: #9c47df;
+$purple-375: #7363d4;
+$purple-350: #ac8fff;
+$purple-300: #606192;
+$purple-200: #676ab4;
+$purple-100: #8285cf;
+
+$sky-900: #171945;
+$sky-850: #191b51;
+$sky-800: #10225c;
+$sky-700: #292c7b;
+$sky-650: #2b2f98;
+$sky-600: #133b88;
+$sky-400: #1961e2;
+
+$blue-900: #0e0f2b;
+$blue-850: #19294c;
+$blue-800: #19335b;
+$blue-750: #171a3f;
+$blue-700: #1c1f4b;
+$blue-600: #1c3055;
+$blue-500: #273870;
+$blue-400: #274a7c;
+
+$cyan-1000: #1b1e47;
+$cyan-900: #1c325f;
+$cyan-800: #1d4967;
+$cyan-750: #215185;
+$cyan-700: #406c83;
+$cyan-650: #4c6d85;
+$cyan-625: #6ba7c0;
+$cyan-600: #2cadc1;
+$cyan-500: #3dccdb;
+$cyan-400: #83f0fa;
+$cyan-300: #95f2fc;
+
+$green-700: #1b3b4c;
+$green-675: #193832;
+$green-650: #203c4e;
+$green-625: #184725;
+$green-600: #123c3f;
+$green-550: #1d5059;
+$green-525: #265052;
+$green-500: #198448;
+$green-475: #2c764d;
+$green-450: #338851;
+$green-400: #19e246;
+$green-300: #17e344;
+$green-200: #59e878;
+
+$teal-700: #1e466f;
+$teal-600: #1b6b76;
+$teal-500: #63bbb1;
+$teal-400: #76f7e1;
+$teal-300: #b6fbef;
+$teal-200: #b9f7ed;
+
+$gold-900: #403238;
+$gold-800: #493312;
+$gold-750: #503d3f;
+$gold-700: #544245;
+$gold-675: #82633d;
+$gold-650: #8e6438;
+$gold-600: #a26c1b;
+$gold-400: #fbab34;
+$gold-375: #e5a752;
+$gold-350: #f3aa47;
+$gold-300: #fcb347;
+$gold-200: #fdc470;
+$gold-100: #efcb92;
+
+$copper-900: #382940;
+$copper-800: #382133;
+$copper-750: #412d4a;
+$copper-700: #4d333d;
+$copper-600: #75382b;
+$copper-500: #99532b;
+$copper-400: #e26119;
+$copper-300: #d66b38;
+$copper-200: #e38517;
+
+$brown-800: #5e3c09;
+$brown-500: #b1662a;
+$brown-400: #ab6d10;
+$brown-300: #b67a20;
+$brown-100: #ea9d2b;
+$brown-200: #eb9648;
+
+$gray-1000: #24264b;
+$gray-900: #3b3b4e;
+$gray-800: #444444;
+$gray-500: #6d6d6d;
+$gray-400: #7274a7;
+$gray-300: #8e90a9;
+$gray-200: #b1b1b1;
+$gray-100: #cbcbcb;
+$gray-50: #d8d8d8;
+
+$red-800: #3b2849;
+$red-750: #4f2e48;
+$red-300: #e75c43;
+
+:root {
+    --screen-xxs: #{$screen-xxs};
+    --screen-xs: #{$screen-xs};
+    --screen-sm: #{$screen-sm};
+    --screen-md: #{$screen-md};
+    --screen-lg: #{$screen-lg};
+    --screen-xl: #{$screen-xl};
+    --screen-xxl: #{$screen-xxl};
+
+    --violet-1000: #{$violet-1000};
+    --violet-900: #{$violet-900};
+    --violet-800: #{$violet-800};
+    --violet-750: #{$violet-750};
+    --violet-725: #{$violet-725};
+    --violet-700: #{$violet-700};
+    --violet-600: #{$violet-600};
+    --violet-550: #{$violet-550};
+    --violet-500: #{$violet-500};
+    --violet-450: #{$violet-450};
+    --violet-400: #{$violet-400};
+    --violet-350: #{$violet-350};
+    --violet-300: #{$violet-300};
+    --violet-200: #{$violet-200};
+
+    --indigo-500: #{$indigo-500};
+    --indigo-400: #{$indigo-400};
+
+    --purple-800: #{$purple-800};
+    --purple-700: #{$purple-700};
+    --purple-600: #{$purple-600};
+    --purple-400: #{$purple-400};
+    --purple-200: #{$purple-200};
+    --purple-100: #{$purple-100};
+
+    --gold-800: #{$gold-800};
+    --gold-600: #{$gold-600};
+    --gold-400: #{$gold-400};
+    --gold-200: #{$gold-200};
+
+    --copper-800: #{$copper-800};
+    --copper-600: #{$copper-600};
+    --copper-400: #{$copper-400};
+    --copper-200: #{$copper-200};
+
+    --sky-900: #{$sky-900};
+    --sky-800: #{$sky-800};
+    --sky-700: #{$sky-700};
+    --sky-600: #{$sky-600};
+    --sky-400: #{$sky-400};
+
+    --blue-900: #{$blue-900};
+    --blue-800: #{$blue-800};
+    --blue-700: #{$blue-700};
+    --blue-600: #{$blue-600};
+    --blue-500: #{$blue-500};
+    --blue-400: #{$blue-400};
+
+    --cyan-800: #{$cyan-800};
+    --cyan-600: #{$cyan-600};
+    --cyan-500: #{$cyan-500};
+    --cyan-400: #{$cyan-400};
+
+    --teal-600: #{$teal-600};
+    --teal-500: #{$teal-500};
+    --teal-400: #{$teal-400};
+    --teal-300: #{$teal-300};
+    --teal-200: #{$teal-200};
+
+    --green-700: #{$green-700};
+    --green-600: #{$green-600};
+    --green-550: #{$green-550};
+    --green-500: #{$green-500};
+    --green-400: #{$green-400};
+    --green-300: #{$green-300};
+    --green-200: #{$green-200};
+
+    --gray-300: #{$gray-300};
+}

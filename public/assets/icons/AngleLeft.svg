@@ -1,0 +1,14 @@
+<svg
+  class="icon angle-left-icon"
+  width="1em"
+  viewBox="0 0 12 17"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M10 15L3 8.5L10 2"
+    stroke="currentColor"
+    strokeOpacity="0.88"
+    strokeWidth="3"
+  />
+</svg>

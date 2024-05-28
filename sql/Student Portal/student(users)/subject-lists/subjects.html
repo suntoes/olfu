@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Schedule</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Schedule</h1>
+        <table border="1" id="subjectTable">
+            <tbody id="subjectTableBody"></tbody>
+        </table>
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'subjects.php',
+                    method: 'GET',
+                    success: function (response) {
+                        $('#subjectTableBody').html(response)
+                    },
+                })
+            })
+        </script>
+    </body>
+</html>

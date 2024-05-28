@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grades</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Your Grades</h1>
+        <div id="gradesTable"></div>
+
+        <script>
+            function fetchGrades() {
+                var xhttp = new XMLHttpRequest()
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById('gradesTable').innerHTML = this.responseText
+                    }
+                }
+                xhttp.open('GET', 'grades.php', true)
+                xhttp.send()
+            }
+
+            fetchGrades()
+        </script>
+    </body>
+</html>

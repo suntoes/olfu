@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <title>OLFU | Student Portal</title>
+    </head>
+
+    <body>
+        <div class="container" id="container">
+            <div class="title">
+                <h1>Edit profile</h1>
+                <p>Fill out blah blah blah</p>
+            </div>
+            <form method="post" action="update_prof.php" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="prof-pic">
+                        <img src="img/default-pic.jpg" alt="" id="profile" />
+                        <label for="pic" class="">Upload Image</label>
+                        <input type="file" accept="image/jpeg, image/jpg, image/png" name="pic" id="pic" />
+                    </div>
+                    <div class="info">
+                        <div class="fullname">
+                            <p>Full Name</p>
+                            <div class="nameInput">
+                                <input type="text" name="fname" id="fname" placeholder="First Name" required />
+                                <input type="text" name="mname" id="mname" placeholder="Middle Name" />
+                                <input type="text" name="lname" id="lname" placeholder="Last Name" required />
+                            </div>
+                        </div>
+                        <div class="stid">
+                            <p>Student ID</p>
+                            <input type="text" name="stdnum" id="stdnum" placeholder="Student Number" required />
+                            <p>Username</p>
+                            <input type="text" name="username" id="username" placeholder="Username" required />
+                        </div>
+                        <div class="college">
+                            <div class="courses">
+                                <p>Course</p>
+                                <select name="course" id="course" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Bachelor of Science in Computer Science">
+                                        Bachelor of Science in Computer Science
+                                    </option>
+                                    <option value="Bachelor of Science in Information Technology">
+                                        Bachelor of Science in Information Technology
+                                    </option>
+                                    <option value="Bachelor of Science in Entertainment and Multimedia Computing">
+                                        Bachelor of Science in Entertainment and Multimedia Computing
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="yearlevel">
+                                <p>Year Level</p>
+                                <select name="year_level" id="year_level" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="gdobms">
+                            <div class="gender">
+                                <p>Gender</p>
+                                <select id="gender-input" name="gender-input" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                            <div class="dob">
+                                <p>Date of Birth</p>
+                                <input type="date" id="dob" name="dob" required />
+                                <p>Nationality</p>
+                                <input type="text" name="nationality" id="nationality" placeholder="Nationality" />
+                            </div>
+                            <div class="mstatus">
+                                <p>Marital Status</p>
+                                <select id="marital-status" name="marital-status" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="contactNumber" required>
+                                <p>Contact Number</p>
+                                <input type="text" name="cnumber" id="cnumber" placeholder="Contact Number" />
+                            </div>
+                        </div>
+                        <div class="address">
+                            <p>Address</p>
+                            <div class="add-info" required>
+                                <div class="line1">
+                                    <input type="text" name="st" id="st" placeholder="Street" />
+                                </div>
+                                <div class="line2">
+                                    <input type="text" name="brgy" id="brgy" placeholder="Barangay" />
+                                    <input type="text" name="city" id="city" placeholder="City" />
+                                </div>
+                                <div class="line3">
+                                    <input type="text" name="country" id="country" placeholder="Country" />
+                                    <input type="text" name="zipcode" id="zipcode" placeholder="Zipcode" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button>Save Profile</button>
+            </form>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

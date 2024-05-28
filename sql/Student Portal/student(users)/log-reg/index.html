@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <title>OLFU | Student Portal</title>
+    </head>
+    <body>
+        <div class="container" id="container">
+            <div class="form-container sign-up">
+                <form method="post" action="register.php" id="signup-form">
+                    <h1>Create Account</h1>
+                    <section class="stdnum">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" name="stdnum" placeholder="Student ID" required />
+                    </section>
+                    <section class="email">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" required />
+                    </section>
+                    <section class="password">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" required />
+                    </section>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="tnc-checkbox" required />
+                        <label for="tnc-checkbox">I accept the <a href="#">terms and conditions</a></label>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <div class="error-message" id="email-error">Email is already registered</div>
+            </div>
+            <div class="form-container sign-in">
+                <form method="post" action="login.php">
+                    <h1>Sign In</h1>
+                    <section class="email">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" />
+                    </section>
+                    <section class="password">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" />
+                    </section>
+                    <a href="#">Forgot Your Password?</a>
+                    <button type="submit">Sign In</button>
+                </form>
+                <div class="error-message" id="user-error">Invalid email and/or password</div>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <img src="../img/logo.png" alt="" />
+                        <h1>Student Portal</h1>
+                        <p>Already have an account?</p>
+                        <button class="hidden" id="login">Sign In</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <img src="../img/logo.png" alt="" />
+                        <h1>Student Portal</h1>
+                        <p>Don't have an account?</p>
+                        <button class="hidden" id="register">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

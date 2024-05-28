@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <title>OLFU | Admin</title>
+    </head>
+
+    <body>
+        <div class="container" id="container">
+            <img src="img/logo.png" alt="" />
+            <h1>Admin Sign-In</h1>
+            <form method="post" action="login.php">
+                <section class="username">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="text" name="username" placeholder="Username" />
+                </section>
+                <section class="password">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" />
+                </section>
+                <button type="submit">Sign In</button>
+            </form>
+            <div class="popup" id="popup">
+                <div class="error-message" id="user-error">Invalid username and/or password.</div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

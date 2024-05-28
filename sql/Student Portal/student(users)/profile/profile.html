@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Display Profiles</title>
+    </head>
+
+    <body>
+        <h1>Student Profiles</h1>
+        <div id="profiles"></div>
+        <a href="edit_profile.html">Edit Profile</a>
+
+        <script>
+            fetch('getinfo.php')
+                .then((response) => response.json())
+                .then((data) => {
+                    const profilesDiv = document.getElementById('profiles')
+                    data.forEach((profile) => {
+                        profilesDiv.innerHTML += `
+                        <div>
+                            <h2>${profile.First_Name} ${profile.Middle_Name} ${profile.Last_Name}</h2>
+                            <img src="${profile.Profile_Pic}" alt="Profile Picture">
+                            <p>Student ID: ${profile.Student_ID}</p>
+                            <p>Username: ${profile.Username}</p>
+                            <p>Course: ${profile.Course}</p>
+                            <p>Year Level: ${profile.Year_Level}</p>
+                            <p>Gender: ${profile.Gender}</p>
+                            <p>Date of Birth: ${profile.Date_Of_Birth}</p>
+                            <p>Nationality: ${profile.Nationality}</p>
+                            <p>Marital Status: ${profile.Marital_Status}</p>
+                            <p>Contact No: ${profile.Contact_No}</p>
+                            <p>Street: ${profile.Street}</p>
+                            <p>Brgy: ${profile.Brgy}</p>
+                            <p>City: ${profile.City}</p>
+                            <p>Country: ${profile.Country}</p>
+                            <p>Zipcode: ${profile.Zipcode}</p>
+                        </div>
+                    `
+                    })
+                })
+                .catch((error) => console.error('Error fetching profiles:', error))
+        </script>
+    </body>
+</html>

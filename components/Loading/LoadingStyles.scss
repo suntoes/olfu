@@ -1,0 +1,115 @@
+.loading {
+    &__logo {
+        filter: drop-shadow(0rem 0.1rem 5rem #{$cyan-400}33);
+        width: 100% !important;
+        pointer-events: none;
+        max-width: 29.8rem;
+    }
+
+    &__progress {
+        border-radius: 0.6rem;
+        max-width: 29.8rem;
+        overflow: hidden;
+        width: 100%;
+
+        &__fill {
+            animation: fill-in 1s ease-out;
+            padding-top: 0.6rem;
+            background: white;
+            width: 100%;
+        }
+
+        @keyframes fill-in {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+    }
+
+    &__text {
+        justify-content: center;
+        align-items: flex-end;
+        font-size: 2.5rem;
+        font-weight: 700;
+        display: flex;
+        gap: 0.25rem;
+
+        &__dot {
+            &--00,
+            &--01,
+            &--02 {
+                background: currentColor;
+                margin-bottom: 1rem;
+                border-radius: 0.1rem;
+                padding: 0.25rem;
+            }
+
+            &--00 {
+                animation: dot-00 1.5s linear infinite;
+            }
+            &--01 {
+                animation: dot-01 1.5s linear infinite;
+            }
+            &--02 {
+                animation: dot-02 1.5s linear infinite;
+            }
+
+            @keyframes dot-00 {
+                0% {
+                    padding: 0rem;
+                }
+                20% {
+                    padding: 0rem;
+                }
+                25% {
+                    padding: 0.25rem;
+                }
+                99% {
+                    padding: 0.25rem;
+                }
+                100% {
+                    padding: 0rem;
+                }
+            }
+
+            @keyframes dot-01 {
+                0% {
+                    padding: 0rem;
+                }
+                45% {
+                    padding: 0rem;
+                }
+                50% {
+                    padding: 0.25rem;
+                }
+                99% {
+                    padding: 0.25rem;
+                }
+                100% {
+                    padding: 0rem;
+                }
+            }
+
+            @keyframes dot-02 {
+                0% {
+                    padding: 0rem;
+                }
+                70% {
+                    padding: 0rem;
+                }
+                75% {
+                    padding: 0.25rem;
+                }
+                99% {
+                    padding: 0.25rem;
+                }
+                100% {
+                    padding: 0rem;
+                }
+            }
+        }
+    }
+}
