@@ -14,6 +14,6 @@ export async function GET(req: NextApiRequest) {
         )
         return NextResponse.json(studentProfileQuery.rows[0])
     } catch (e) {
-        return NextResponse.json({ error: true, message: 'Something went wrong' })
+        return NextResponse.json({ error: true, message: 'Something went wrong', log: JSON.stringify(e) })
     }
 }

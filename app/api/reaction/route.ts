@@ -41,7 +41,7 @@ export async function POST(req: Request) {
         }
     } catch (e) {
         console.log(e)
-        return NextResponse.json({ error: true, message: 'Something went wrong' })
+        return NextResponse.json({ error: true, message: 'Something went wrong', log: JSON.stringify(e) })
     }
 }
 
@@ -63,6 +63,6 @@ export async function DELETE(req: Request) {
         return NextResponse.json(reactionQuery.rows[0])
     } catch (e) {
         console.log(e)
-        return NextResponse.json({ error: true, message: 'Something went wrong' })
+        return NextResponse.json({ error: true, message: 'Something went wrong', log: JSON.stringify(e) })
     }
 }
