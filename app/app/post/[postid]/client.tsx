@@ -28,6 +28,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { addUTCOffset, timeAgo } from 'lib/utils'
 import { PostItem } from 'app/app/post-item'
 import { Editor } from './editor'
+import NextLink from 'next/link'
 import './content.scss'
 
 export const Post = ({ postid }: { postid: string }) => {
@@ -324,8 +325,12 @@ export const Post = ({ postid }: { postid: string }) => {
                         <Box my='2.5rem' className='content' dangerouslySetInnerHTML={{ __html: post.content }} />
                 </>}
                 <Divider mb='2rem' borderColor='gray.300' />
-                <Heading display={{ base: 'block', lg: 'none' }} mb='1rem'>
-                    More Posts
+                <Heading as={Flex} justify='space-between' display={{ base: 'flex', lg: 'none' }} my='1rem' w='full'>
+                    Posts
+                    <Button as={NextLink} href='/app/post/create' aria-label='Create post' fontSize='1rem' colorScheme='yellow'>
+                        Write
+                        <EditIcon ml='0.5rem'/>
+                    </Button>
                 </Heading>
                 <Box
                     style={{

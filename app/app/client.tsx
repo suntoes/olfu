@@ -16,22 +16,25 @@ import { PostItem } from './post-item'
 import { HomeProvider, useHome } from 'lib/contexts'
 import { CommentType, PostType, ReactionType } from 'lib/types'
 import { EditIcon } from '@chakra-ui/icons'
+import { FaHome } from "react-icons/fa";
+import { BiSolidUserBadge } from "react-icons/bi";
 import NextLink from 'next/link'
 
 export const links = [
-    { icon: FaHouseUser, name: 'Profile', href: '/app/profile' },
+    { icon: FaHome, name: 'Home', href: '/app' },
+    { icon: BiSolidUserBadge, name: 'Profile', href: '/app/profile' },
     { icon: AiOutlineSchedule, name: 'Schedule', href: '/app/schedule' },
     { icon: GiWhiteBook, name: 'Subjects', href: '/app/subjects' },
     { icon: MdEditNote, name: 'Registration', href: '/app/registration' },
-    { icon: GiAbacus, name: 'Grades', href: '/app/grades' },
+    { icon: GiAbacus, name: 'Grades', href: '/app/grades', disabled: true },
     { icon: FaCalendarAlt, name: 'Calendar', href: '/app/calendar', disabled: true },
     { icon: MdAccountBalance, name: 'Account', href: '/app/account', disabled: true },
-    { icon: MdForum, name: 'Forum', href: '/app/forum', disabled: true },
+    // { icon: MdForum, name: 'Forum', href: '/app/forum', disabled: true },
     { icon: GoReport, name: 'Report', href: '/app/report', disabled: true },
     { icon: CiSettings, name: 'Settings', href: '/app/settings', disabled: true },
 ]
 
-const colors = ['green', 'teal', 'blue', 'cyan', 'purple', 'pink', 'red', 'orange', 'yellow', 'black']
+export const colors = ['green', 'teal', 'blue', 'cyan', 'purple', 'pink', 'red', 'orange', 'yellow', 'black']
 
 // export const metadata = {
 //     title: 'Home - OLFU Student'
@@ -46,7 +49,10 @@ export function AppClient() {
                 <Announcements />
                 <Heading as={Flex} justify='space-between' display={{ base: 'flex', lg: 'none' }} my='1rem' w='full'>
                     Posts
-                    <IconButton as={NextLink} href='/app/post/create' aria-label='Create post' icon={<EditIcon />} fontSize='1rem' colorScheme='green'/>
+                    <Button as={NextLink} href='/app/post/create' aria-label='Create post' fontSize='1rem' colorScheme='yellow'>
+                        Write
+                        <EditIcon ml='0.5rem'/>
+                    </Button>
                 </Heading>
                 <Box
                     mb='1rem'

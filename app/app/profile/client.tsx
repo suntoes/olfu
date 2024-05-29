@@ -107,7 +107,10 @@ export function ProfileClient({ user: userProp }: { user: User }) {
                 </Flex>
                 <Heading as={Flex} justify='space-between' display={{ base: 'flex', lg: 'none' }} my='1rem' w='full'>
                     Posts
-                    <IconButton as={NextLink} href='/app/post/create' aria-label='Create post' icon={<EditIcon />} fontSize='1rem' colorScheme='green'/>
+                    <Button as={NextLink} href='/app/post/create' aria-label='Create post' fontSize='1rem' colorScheme='yellow'>
+                        Write
+                        <EditIcon ml='0.5rem'/>
+                    </Button>
                 </Heading>
                 <Box
                     mb='1rem'

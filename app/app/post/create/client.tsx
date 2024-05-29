@@ -15,6 +15,7 @@ import { Tiptap } from '../[postid]/tiptap'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useHome, useUser } from 'lib/contexts'
 import NextLink from 'next/link'
+import { PostItem } from 'app/app/post-item'
 
 export const Create = () => {
 
@@ -143,6 +144,34 @@ export const Create = () => {
             <Divider borderColor='gray.300' mb='2.5rem'/>
             <Tiptap content={content} onChange={(val) => setContent(val)} />
             <Box pt='2rem'/>
+            <Divider mb='2rem' borderColor='gray.300' />
+                <Heading as={Flex} justify='space-between' display={{ base: 'flex', lg: 'none' }} my='1rem' w='full'>
+                    Posts
+                    <Button as={NextLink} href='/app/post/create' aria-label='Create post' fontSize='1rem' colorScheme='yellow'>
+                        Write
+                        <EditIcon ml='0.5rem'/>
+                    </Button>
+                </Heading>
+                <Box
+                    style={{
+                        maskImage:
+                            'linear-gradient(0deg, transparent, black 2rem, black calc(100% - 2rem), transparent)',
+                    }}
+                >
+                    <Flex
+                        display={{ base: 'flex', lg: 'none' }}
+                        direction='column'
+                        aspectRatio={{ base: 3 / 4, sm: 4 / 3, md: 16 / 9 }}
+                        overflow='auto'
+                        gap='0.75rem'
+                        py='1.5rem'
+                    >
+                        {posts.map((item, i) => (
+                            <PostItem key={i} post={item} />
+                        ))}
+                    </Flex>
+                </Box>
+
         </Box>
     )
 }

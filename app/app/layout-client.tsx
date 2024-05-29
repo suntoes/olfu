@@ -177,7 +177,10 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                         <Box display={{ base: 'none', lg: 'block' }} w='30%' maxW='30rem' zIndex={1}>
                             <Heading as={Flex} justify='space-between' mb='1rem'>
                                 Posts
-                                <IconButton as={NextLink} href='/app/post/create' aria-label='Create post' icon={<EditIcon />} fontSize='1rem' colorScheme='green'/>
+                                <Button as={NextLink} href='/app/post/create' aria-label='Create post' fontSize='1rem' colorScheme='yellow'>
+                                    Write
+                                    <EditIcon ml='0.5rem'/>
+                                </Button>
                             </Heading>
                             <Box h='50vh' maxH='70vh' overflow='auto'>
                                 <Flex direction='column' gap='0.75rem'>
