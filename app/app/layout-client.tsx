@@ -32,7 +32,7 @@ import {
 } from '@chakra-ui/react'
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin, FaTiktok } from 'react-icons/fa'
 import { EditIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useCookies } from 'react-cookie'
 import { getGreeting, logout } from 'lib/utils'
 import { userAgent } from 'next/server'
@@ -40,7 +40,7 @@ import { useHome, useUser } from 'lib/contexts'
 import { FaUser } from 'react-icons/fa'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { PostItem } from './post-item'
 import { revalidatePath } from 'next/cache'
 import { IoMdExit } from "react-icons/io";
@@ -53,9 +53,14 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname()
     const { posts } = useHome()
     const { user } = useUser()
+    const router = useRouter()
 
     const cancelLogoutRef = useRef<HTMLButtonElement | null>(null)
     const navBtnRef = useRef<HTMLButtonElement | null>(null)
+
+    useEffect(() => {
+        onNavClose()
+    }, [router])
 
     const handleLogout = useCallback(() => {
         logout()
@@ -158,7 +163,7 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                             icon={<FaUser />}
                         />
                         <MenuList>
-                            <MenuItem><Link as={NextLink} href='/app/profile'>Profile</Link></MenuItem>
+                            <MenuItem as={NextLink} href='/app/profile'>Profile</MenuItem>
                             <MenuItem onClick={onLogoutOpen}>Logout</MenuItem>
                         </MenuList>
                     </Menu>

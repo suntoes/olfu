@@ -7,22 +7,17 @@ import { useHome, useUser } from 'lib/contexts'
 import { FaUser } from 'react-icons/fa'
 import { EditIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
-import { registerAction } from './action'
 import { useEffect, useMemo, useState } from 'react'
 import { ClassSchedType, ClassType, SubjectType, User, UserContextType } from 'lib/types'
 import { useCookies } from 'react-cookie'
 
-export function RegistrationClient({ classes, classScheds, subjects }: { classes: ClassType[]; classScheds: ClassSchedType[]; subjects: SubjectType[] }) {
+export function AccountClient({ classes, classScheds, subjects }: { classes: ClassType[]; classScheds: ClassSchedType[]; subjects: SubjectType[] }) {
     const { user, setUser } = useUser()
-    
-    const [yearLevel, setYearLevel] = useState(user?.year_level || '')
-    const [course, setCourse] = useState(user?.course || '')
-    const [ cookies ] = useCookies()
     const { posts } = useHome()
 
     const class_id = useMemo(() => {
-        return classes.find(item => item.year_level === yearLevel && item.course === course)?.class_id || ''
-    }, [yearLevel, course]) 
+        return classes.find(item => item.year_level === user?.year_level && item.course === user.course)?.class_id || ''
+    }, [user]) 
 
     const enlistedSubjects = useMemo(() => {
         if(class_id) return classScheds
@@ -37,7 +32,7 @@ export function RegistrationClient({ classes, classScheds, subjects }: { classes
     return (
         <Flex as='article' className='app' w='full' gap='2rem'>
             <Box flex={1}>
-                <Heading>{user?.username}&lsquo;s Registration</Heading>
+                <Heading>{user?.username}&lsquo;s Accounts</Heading>
                 <Flex gap='2rem' my='0.75rem' justify='center' direction={{ base: 'column' }}>
                     <Box pos='relative' h='8.75rem'>
                         <TableContainer pos='absolute' left={0} top={0} w='full' pb='0.5rem' overflow='auto' bg='gray.200' rounded='md'>
@@ -59,9 +54,9 @@ export function RegistrationClient({ classes, classScheds, subjects }: { classes
                                     </Tr>
                                     <Tr>
                                         <Td borderColor='gray.200'>Program:</Td>
-                                        <Td borderColor='gray.200'>{course || '---'}</Td>
+                                        <Td borderColor='gray.200'>{user?.course || '---'}</Td>
                                         <Td borderColor='gray.200'>Year Level:</Td>
-                                        <Td borderColor='gray.200'>{yearLevel || '---'}</Td>
+                                        <Td borderColor='gray.200'>{user?.year_level || '---'}</Td>
                                     </Tr>
                                     <Tr>
                                         <Td borderColor='gray.200'>Status:</Td>
@@ -79,55 +74,77 @@ export function RegistrationClient({ classes, classScheds, subjects }: { classes
                             </Table>
                         </TableContainer>
                     </Box>
-                    <Flex as='form' onSubmit={() => { if(yearLevel && course && user) setUser({ ...user, year_level: yearLevel, course  })}} action={registerAction} align='end' gap='0.5rem' wrap='wrap'>
-                        <SimpleGrid columns={3} flex={1} gap='0.5rem'>
-                            <Box>
-                                <Text mb='0.125rem'>Year  Level</Text>
-                                <Select name='year_level' bg='white' value={yearLevel} onChange={e => setYearLevel(e.target.value)}>
-                                    <option selected disabled value=''>Pick a year</option>
-                                    {Array.from(new Set(classes.map(item => item.year_level))).map((item, i) =>
-                                        <option key={i} value={item}>{item}</option>
-                                    )}
-                                </Select>
-                            </Box>
-                            <GridItem colSpan={2}>
-                                <Text mb='0.125rem'>Course</Text>
-                                <Select name='course' bg='white' value={course} onChange={e => setCourse(e.target.value)}>
-                                    <option selected disabled value=''>Select a course</option>
-                                    {Array.from(new Set(classes.map(item => item.course))).map((item, i) =>
-                                        <option key={i} value={item}>{item}</option>
-                                    )}
-                                </Select>
-                            </GridItem>
-                        </SimpleGrid>
-                        <Button w={{ base: 'full', md: 'unset' }} type='submit' colorScheme='yellow'>Enroll</Button>
-                    </Flex>
                     <Box>
-                        <Text mb='0.25rem'>Enlisted Subjects in Selected Year and Course</Text>
-                        <Box pos='relative' h={`calc(3rem + ${enlistedSubjects.length * 3.25}rem)`}>
+                        <Text mb='0.25rem'>{user?.username}&lsquo;s Transaction Dues</Text>
+                        <Box pos='relative' h={`calc(3rem + ${13 * 3.25}rem)`}>
                             <TableContainer pos='absolute' left={0} top={0} w='full' overflow='auto' bg='white' rounded='md'>
                                 <Table>
                                     <Thead>
                                         <Tr>
-                                            <Th>Subject Code</Th>
-                                            <Th>Description</Th>
-                                            <Th>Professor</Th>
-                                            <Th isNumeric>Units</Th>
-                                            <Th>Schedule</Th>
-                                            <Th>Room</Th>
+                                            <Th>Application</Th>
+                                            <Th isNumeric>Paid</Th>
+                                            <Th isNumeric>Due</Th>
                                         </Tr>
                                     </Thead>
                                     <Tbody>
-                                        {enlistedSubjects.map((item, i) =>
-                                            <Tr key={i}>
-                                                <Td>{item.subject_code}</Td>
-                                                <Td>{item.subject_name}</Td>
-                                                <Td>{item.professor}</Td>
-                                                <Td isNumeric>3</Td>
-                                                <Td>{item.schedule}</Td>
-                                                <Td>{item.room}</Td>
-                                            </Tr>
-                                        )}
+                                        <Tr><Td/><Td/><Td/></Tr>
+                                        <Tr>
+                                            <Td>2nd Semester</Td>
+                                            <Td></Td>
+                                            <Td></Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Preliminary</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Mid terms</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Final Terms</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Total</Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                        </Tr>
+                                        <Tr><Td/><Td/><Td/></Tr>
+                                        <Tr>
+                                            <Td>2nd Semester</Td>
+                                            <Td></Td>
+                                            <Td></Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Preliminary</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Mid terms</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Final Terms</Td>
+                                            <Td isNumeric>Php --</Td>
+                                            <Td isNumeric>Php --</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Total</Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                        </Tr>
+                                        <Tr><Td/><Td/><Td/></Tr>
+                                        <Tr>
+                                            <Td>Total</Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                            <Td isNumeric><b>Php --</b></Td>
+                                        </Tr>
                                     </Tbody>
                                 </Table>
                             </TableContainer>
