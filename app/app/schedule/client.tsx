@@ -77,12 +77,12 @@ export function ScheduleClient({ classes, classScheds, subjects }: { classes: Cl
                                                         key={i} 
                                                     >
                                                         <Box w='full' h='full' pos='relative'>
-                                                        <Box display={{ base: 'none', lg: 'block' }}>
+                                                        <Box display={{ base: 'none', xl: 'block' }} p='0.25rem'>
                                                             <Text>{start}-{end}</Text>
                                                             <Text>{item.subject_code}</Text>
                                                             <Text>{item.room}</Text>
                                                         </Box>
-                                                        <Box display={{ base: 'block', lg: 'none' }} pos='absolute' bottom='0.25rem' left='3.5rem' transform='rotate(-90deg)' transformOrigin='0% 100%'>
+                                                        <Box display={{ base: 'block', xl: 'none' }} pos='absolute' bottom='0.25rem' left='3.5rem' transform='rotate(-90deg)' transformOrigin='0% 100%'>
                                                             <Text>{start}-{end}</Text>
                                                             <Text>{item.subject_code}</Text>
                                                             <Text>{item.room}</Text>
