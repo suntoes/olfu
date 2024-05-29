@@ -193,7 +193,7 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                     )}
                 </Flex>
             </Container>
-            <Center bg='gray.200' p='4rem'>
+            <Center bg='gray.200' px={{ base: '2rem', md: '4rem' }} py='4rem'>
                 <Flex w='full' maxW='80rem' align='end'>
                     <Flex direction='column' gap='2rem'>
                         <Box opacity={0.4}>
@@ -232,7 +232,7 @@ export const LayoutClient = ({ children }: { children: React.ReactNode }) => {
                     </Flex>
                 </Flex>
             </Center>
-            <Center bg='gray.300' px='4rem' py='1rem'>
+            <Center bg='gray.300' px={{ base: '2rem', md: '4rem' }} py='1rem'>
                 <Flex w='full' maxW='80rem' gap='2rem' flexWrap='wrap'>
                     <Text>© {new Date().getFullYear()}. Our Lady of Fatima University. All rights reserved.</Text>
                     <Flex flexWrap='wrap' gap='0.5rem' ml='auto' flex={1} justify='space-between' maxW='20rem'>

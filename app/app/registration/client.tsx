@@ -13,7 +13,7 @@ import { ClassSchedType, ClassType, SubjectType, User, UserContextType } from 'l
 import { useCookies } from 'react-cookie'
 
 export function RegistrationClient({ classes, classScheds, subjects }: { classes: ClassType[]; classScheds: ClassSchedType[]; subjects: SubjectType[] }) {
-    const { user } = useUser()
+    const { user, setUser } = useUser()
     
     const [yearLevel, setYearLevel] = useState(user?.year_level || '')
     const [course, setCourse] = useState(user?.course || '')
@@ -79,7 +79,7 @@ export function RegistrationClient({ classes, classScheds, subjects }: { classes
                             </Table>
                         </TableContainer>
                     </Box>
-                    <Flex as='form' action={registerAction} align='end' gap='0.5rem' wrap='wrap'>
+                    <Flex as='form' onSubmit={() => { if(yearLevel && course && user) setUser({ ...user, year_level: yearLevel, course  })}} action={registerAction} align='end' gap='0.5rem' wrap='wrap'>
                         <SimpleGrid columns={3} flex={1} gap='0.5rem'>
                             <Box>
                                 <Text mb='0.125rem'>Year  Level</Text>

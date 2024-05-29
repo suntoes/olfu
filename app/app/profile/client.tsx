@@ -34,11 +34,11 @@ export function ProfileClient({ user: userProp }: { user: User }) {
                     <Flex as='form' action={profileAction} flex={1} direction='column' gap='0.75rem'>
                         <Box>
                             <Text mb='0.125rem'>Full Name</Text>
-                            <SimpleGrid columns={3} gap='0.5rem'>
-                                <Input name='first_name' defaultValue={userProp?.first_name || ''} bg='white' placeholder='First Name' required/>
-                                <Input name='middle_name' defaultValue={userProp?.middle_name || ''} bg='white' placeholder='Middle Name' required/>
-                                <Input name='last_name' defaultValue={userProp?.last_name || ''} bg='white' placeholder='Last Name' required/>
-                            </SimpleGrid>
+                            <Flex gap='0.75rem 0.5rem' wrap='wrap'>
+                                <Input flex={{ base: 'unset', md: 1 }} w={{base: 'full', md: 'unset'}} name='first_name' defaultValue={userProp?.first_name || ''} bg='white' placeholder='First Name' required/>
+                                <Input flex={1} name='middle_name' defaultValue={userProp?.middle_name || ''} bg='white' placeholder='Middle Name' required/>
+                                <Input flex={1} name='last_name' defaultValue={userProp?.last_name || ''} bg='white' placeholder='Last Name' required/>
+                            </Flex>
                         </Box>
                         <Flex gap='0.75rem 0.5rem' flexWrap='wrap'>
                             <Box flex={1} maxW='11rem'>
@@ -87,7 +87,7 @@ export function ProfileClient({ user: userProp }: { user: User }) {
                                 <Text mb='0.125rem'>Year  Level</Text>
                                 <Input bg='white' value={userProp?.year_level || ''} placeholder='---' readOnly isDisabled/>
                             </Box>
-                            <Box minW='25rem' flex={1}>
+                            <Box minW='20rem' flex={1}>
                                 <Text mb='0.125rem'>Course Enrolled</Text>
                                 <Input bg='white' value={userProp?.course || ''} placeholder='Not enrolled yet' readOnly isDisabled/>
                             </Box>
