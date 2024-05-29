@@ -23,9 +23,9 @@ import NextLink from 'next/link'
 export const links = [
     { icon: FaHome, name: 'Home', href: '/app' },
     { icon: BiSolidUserBadge, name: 'Profile', href: '/app/profile' },
+    { icon: MdEditNote, name: 'Registration', href: '/app/registration' },
     { icon: AiOutlineSchedule, name: 'Schedule', href: '/app/schedule' },
     { icon: GiWhiteBook, name: 'Subjects', href: '/app/subjects' },
-    { icon: MdEditNote, name: 'Registration', href: '/app/registration' },
     { icon: GiAbacus, name: 'Grades', href: '/app/grades', disabled: true },
     { icon: FaCalendarAlt, name: 'Calendar', href: '/app/calendar', disabled: true },
     { icon: MdAccountBalance, name: 'Account', href: '/app/account', disabled: true },
@@ -87,7 +87,7 @@ export function AppClient() {
                             gap='1rem'
                             aspectRatio={1}
                             aria-label={item.name}
-                            href={item.href}
+                            href={item.disabled ? '' : item.href}
                             w='full'
                             h='unset'
                             isDisabled={item.disabled}
