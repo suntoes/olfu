@@ -13,7 +13,6 @@ import { User, UserContextType } from 'lib/types'
 import { useCookies } from 'react-cookie'
 
 export function ProfileClient({ user: userProp }: { user: User }) {
-    const [ cookies ] = useCookies()
     const { setUser } = useUser()
     const { posts } = useHome()
 
@@ -33,7 +32,6 @@ export function ProfileClient({ user: userProp }: { user: User }) {
                         <Button bg='white'>Upload Image</Button>
                     </Flex>
                     <Flex as='form' action={profileAction} flex={1} direction='column' gap='0.75rem'>
-                        <input name='jwt' value={cookies.jwt || ''} type='hidden'/>
                         <Box>
                             <Text mb='0.125rem'>Full Name</Text>
                             <SimpleGrid columns={3} gap='0.5rem'>

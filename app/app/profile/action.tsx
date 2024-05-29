@@ -2,9 +2,10 @@
 
 import { postgres } from "app/db"
 import { serverToast } from "lib/actions"
+import { cookies } from "next/headers"
 
 export const profileAction: any = async(formData: any) => {
-    const jwt = formData.get('jwt')
+    const jwt = cookies().get('jwt')?.value
     const jwtQuery = await postgres.query(`SELECT * FROM jwt WHERE id = $1 LIMIT 1;`, [jwt])
     const student_id = jwtQuery.rows[0].student_id
     
@@ -35,13 +36,7 @@ export const profileAction: any = async(formData: any) => {
         if(res.rows.length) {
             serverToast('Profile', 'Changes saved', 'success')
         } else {
-            // serverToast('Profile', `Couldn't save changes`, 'error')
-            serverToast('Profile', `
-            UPDATE student_profiles 
-            SET ${Object.keys(profile).map((item, i) => `${item} = '${(profile as any)[item]}'`).join(', ')} 
-            WHERE student_id = ${student_id} 
-            RETURNING *;
-        `, 'error')
+            serverToast('Profile', `Couldn't save changes`, 'error')
         }
     }
 }

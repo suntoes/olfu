@@ -21,6 +21,25 @@ export interface CommentType {
     timestamp: string
 }
 
+export interface ClassType {
+    class_id: string
+    course: string
+    year_level: string
+}
+
+export interface ClassSchedType {
+    class_id: string
+    subject_code: string
+    schedule: string
+    room: string
+}
+
+export interface SubjectType {
+    subject_code: string
+    subject_name: string
+    professor: string
+}
+
 export interface HomeContextValue {
     posts: PostType[]
     setPosts: React.Dispatch<React.SetStateAction<HomeContextValue['posts']>>
