@@ -270,10 +270,11 @@ CREATE TABLE reactions (
 CREATE TABLE reports (
   id SERIAL PRIMARY KEY,
   Report_Type varchar(255) DEFAULT NULL,
+  student_id varchar(255) NOT NULL,
+  Title text DEFAULT NULL,
   Description text DEFAULT NULL,
-  Submission_Date timestamp(0) NOT NULL DEFAULT current_timestamp
+  Submission_Date timestamp(0) NULL DEFAULT current_timestamp
 ) ;
-
 
 CREATE TABLE studentenrollment (
   Student_ID varchar(50) NOT NULL,

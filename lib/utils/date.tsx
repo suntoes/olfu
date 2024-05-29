@@ -3,15 +3,15 @@ export function getClientUTCOffset() {
 }
 
 export function addUTCOffset(dateString: Date | string, utcOffset: number = getClientUTCOffset()) {
-    const date = new Date(dateString)
+    const date = new Date(dateString || '')
 
     // Convert the utcOffset to milliseconds
     const offsetMilliseconds = utcOffset * -60000
 
     // Add the offset to the date
-    const newDate = new Date(date.getTime() + offsetMilliseconds)
+    const newDate = new Date(date.getTime() + offsetMilliseconds) as any
 
-    return newDate
+    return newDate === 'Invalid Date' ? new Date() : newDate
 }
 
 export function getGreeting() {

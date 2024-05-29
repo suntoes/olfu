@@ -28,9 +28,9 @@ export const links = [
     { icon: GiWhiteBook, name: 'Subjects', href: '/app/subjects' },
     { icon: GiAbacus, name: 'Grades', href: '/app/grades' },
     { icon: MdAccountBalance, name: 'Accounts', href: '/app/accounts' },
+    { icon: GoReport, name: 'Reports', href: '/app/reports' },
     { icon: FaCalendarAlt, name: 'Calendar', href: '/app/calendar', disabled: true },
     // { icon: MdForum, name: 'Forum', href: '/app/forum', disabled: true },
-    { icon: GoReport, name: 'Report', href: '/app/report', disabled: true },
     { icon: CiSettings, name: 'Settings', href: '/app/settings', disabled: true },
 ]
 

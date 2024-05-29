@@ -7,6 +7,7 @@ import {
     HomeContextValue,
     HomeProviderProps,
     PostType,
+    ReportType,
     UserContextType,
     UserContextValue,
     UserProviderProps,
@@ -25,6 +26,7 @@ export const useHome = () => {
 export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) => {
     const [reactions, setReactions] = useState(valueProp?.reactions || [])
     const [initialComments, setComments] = useState(valueProp?.comments || [])
+    const [initialReports, setReports] = useState(valueProp?.reports || [])
     const [initialPosts, setPosts] = useState(valueProp?.posts || [])
     const { user } = useUser()
     const id = useId()
@@ -39,8 +41,64 @@ export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) 
         .sort((a, b) => (new Date(b.timestamp)).getTime() - (new Date(a.timestamp)).getTime())
     , [initialPosts])
 
+    const reports: ReportType[] = useMemo(() => initialReports
+        .map((item) => ({...item, submission_date: addUTCOffset(item.submission_date).toString()}))
+        .sort((a, b) => (new Date(b.submission_date)).getTime() - (new Date(a.submission_date)).getTime())
+    , [initialReports])
+
     const commentsRef = useRef<CommentType[]>(initialComments)
+    const reportsRef = useRef<ReportType[]>(initialReports)
     const postsRef = useRef<PostType[]>(initialPosts)
+    
+    const handleReport: HomeContextValue['handleReport'] = useCallback(
+        async (id, title, description) => {
+            if(!id && title && description) {
+                const tmpId = new Date().getTime().toString()
+                const newReports = [
+                    ...initialReports,
+                    { id: tmpId, report_type: 'sent' as 'sent', student_id: user?.student_id || '', title, description, submission_date: '' },
+                ]
+                reportsRef.current = newReports
+                console.log(newReports)
+                setReports(newReports)
+
+                const res = await authedAPI('/report', 'POST', JSON.stringify({ title, description }))
+                if (res?.error) {
+                    const newReports = reportsRef.current.filter((item) => item.id !== tmpId)
+                    reportsRef.current = newReports
+                    setReports(newReports)
+                } else {
+                    const reportIndex = reportsRef.current.findIndex((item) => item.id === tmpId)
+                    if (reportIndex === -1) {
+
+                    } else {
+                        const newReports = [
+                            ...reportsRef.current.slice(0, reportIndex),
+                            res,
+                            ...reportsRef.current.slice(reportIndex + 1),
+                        ]
+                        reportsRef.current = newReports
+                        setReports(newReports)
+                    }
+                }
+            } else if (id &&!title && !description) {
+                const targetReport = reportsRef.current.find((item) => item.id === id) as ReportType
+                const oldReports = [...reportsRef.current]
+                const newReports = reportsRef.current.filter((item) => item.id !== id)
+                reportsRef.current = newReports
+                setReports(newReports)
+
+                const res = await authedAPI('/report', 'DELETE', JSON.stringify({ id }))
+                if (res?.error) {
+                    reportsRef.current = oldReports
+                    setReports(oldReports)
+                } else {
+
+                }
+            }
+        },
+        [initialReports, user]
+    )
     
     const handlePost: HomeContextValue['handlePost'] = useCallback(
         async (postid, title, content) => {
@@ -198,11 +256,14 @@ export const HomeProvider = ({ children, value: valueProp }: HomeProviderProps) 
     const value = {
         posts,
         setPosts,
+        reports,
+        setReports,
         reactions,
         setReactions,
         comments,
         setComments,
         handleComment,
+        handleReport,
         handleReact,
         handlePost
     }

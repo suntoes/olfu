@@ -13,6 +13,13 @@ export interface ReactionType {
     reactiontype: 'like' | 'dislike' | null
     timestamp: string
 }
+export interface ReportType {
+    id: string
+    report_type: 'sent' | 'in progress' | 'done' | 'dismissed'
+    title: string
+    description: string
+    submission_date: string
+}
 export interface CommentType {
     commentid: string
     postid: string
@@ -43,10 +50,13 @@ export interface SubjectType {
 export interface HomeContextValue {
     posts: PostType[]
     setPosts: React.Dispatch<React.SetStateAction<HomeContextValue['posts']>>
+    reports: ReportType[]
+    setReports: React.Dispatch<React.SetStateAction<HomeContextValue['reports']>>
     reactions: ReactionType[]
     setReactions: React.Dispatch<React.SetStateAction<HomeContextValue['reactions']>>
     comments: CommentType[]
     setComments: React.Dispatch<React.SetStateAction<HomeContextValue['comments']>>
+    handleReport: (id: string | null, title: string | null, content: string | null) => Promise<ReportType | void>
     handlePost: (postid: string | null, title: string | null, content: string | null) => Promise<PostType | void>
     handleComment: (postid: string, commentcontent: string | null, commentid?: string | null) => void
     handleReact: (postid: string, commentid: string | null, reactiontype?: 'like' | 'dislike') => void
@@ -58,6 +68,7 @@ export interface HomeProviderProps {
     children: React.ReactNode
     value?: {
         posts: HomeContextValue['posts']
+        reports: HomeContextValue['reports']
         reactions: HomeContextValue['reactions']
         comments: HomeContextValue['comments']
     }
